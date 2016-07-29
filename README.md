@@ -1,2 +1,2 @@
 # whitehall2
-R code
+R code for analysis of Whitehall II dataset.
