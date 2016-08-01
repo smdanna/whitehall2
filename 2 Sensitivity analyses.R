@@ -8,6 +8,9 @@ View(w2.r)
 
 ### Univariate and multivariate regressions
 
+# Function created by Dr. Lawrence Joseph
+# http://www.medicine.mcgill.ca/epidemiology/Joseph/courses/EPIB-621/regression.with.ci.txt
+
 regression.with.ci <- function(regress.out, level=0.95)
 {
   ################################################################
@@ -25,6 +28,9 @@ regression.with.ci <- function(regress.out, level=0.95)
   output <- list(regression.table = usual.output, intercept.ci = intercept.ci, slope.ci = slope.ci)
   return(output)
 }
+
+# Function created by Dr. Lawrence Joseph
+# http://www.medicine.mcgill.ca/epidemiology/Joseph/courses/EPIB-621/multiple.regression.with.ci.txt
 
 multiple.regression.with.ci <- function(regress.out, level=0.95)
 {
@@ -94,52 +100,6 @@ w2.r$MDM.pd[w2.r$MDM.r == 3] <- 1
 
 
 ### Univariate and multivariate regressions
-
-regression.with.ci <- function(regress.out, level=0.95)
-{
-  ################################################################
-  #                                                              #
-  #  This function takes the output from an lm                   #
-  #  (linear model) command in R and provides not                #
-  #  only the usual output from the summary command, but         #
-  #  adds confidence intervals for intercept and slope.          #
-  #                                                              #
-  ################################################################
-  usual.output <- summary(regress.out)
-  t.quantile <- qt(1-(1-level)/2, df=regress.out$df)
-  intercept.ci <- summary(regress.out)$coefficients[1] + c(-1, 1) * t.quantile * summary(regress.out)$coefficients[3]
-  slope.ci <- summary(regress.out)$coefficients[2] + c(-1, 1) * t.quantile * summary(regress.out)$coefficients[4]
-  output <- list(regression.table = usual.output, intercept.ci = intercept.ci, slope.ci = slope.ci)
-  return(output)
-}
-
-multiple.regression.with.ci <- function(regress.out, level=0.95)
-{
-  ################################################################
-  #                                                              #
-  #  This function takes the output from an lm                   #
-  #  (linear model) command in R and provides not                #
-  #  only the usual output from the summary command, but         #
-  #  adds confidence intervals for intercept and slope.          #
-  #                                                              #
-  #  This version accommodates multiple regression parameters    #
-  #                                                              #
-  ################################################################
-  usual.output <- summary(regress.out)
-  t.quantile <- qt(1-(1-level)/2, df=regress.out$df)
-  number.vars <- length(regress.out$coefficients)
-  temp.store.result <- matrix(rep(NA, number.vars*2), nrow=number.vars)
-  for(i in 1:number.vars)
-  {
-    temp.store.result[i,] <- summary(regress.out)$coefficients[i] +
-      c(-1, 1) * t.quantile * summary(regress.out)$coefficients[i+number.vars]
-  }
-  intercept.ci <- temp.store.result[1,]
-  slopes.ci <- temp.store.result[-1,]
-  output <- list(regression.table = usual.output, intercept.ci = intercept.ci,
-                 slopes.ci = slopes.ci)
-  return(output)
-}
 
 # Univariate linear regression with expanded diabetes group 
 
