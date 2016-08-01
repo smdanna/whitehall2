@@ -106,6 +106,9 @@ ggplot(JCog.means, aes(x=diab, y=mean, colour=dep, group=dep)) +
 
 #### Univariate and multivariate regressions ####
 
+# Function created by Dr. Lawrence Joseph
+# http://www.medicine.mcgill.ca/epidemiology/Joseph/courses/EPIB-621/regression.with.ci.txt
+
 regression.with.ci <- function(regress.out, level=0.95)
 {
   ################################################################
@@ -123,6 +126,9 @@ regression.with.ci <- function(regress.out, level=0.95)
   output <- list(regression.table = usual.output, intercept.ci = intercept.ci, slope.ci = slope.ci)
   return(output)
 }
+
+# Function created by Dr. Lawrence Joseph
+# http://www.medicine.mcgill.ca/epidemiology/Joseph/courses/EPIB-621/multiple.regression.with.ci.txt
 
 multiple.regression.with.ci <- function(regress.out, level=0.95)
 {
