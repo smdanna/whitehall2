@@ -1,10 +1,8 @@
 
 #### Sensitivity analysis 1: dichotomized depressive score ####
 
-# Recode depressive symptoms as binary: low dep symptoms/CESD<16(0), high dep symptoms/CESD>=16(1)
-
-w2.r$MDPN.r <- ifelse(w2.r$MDPN_SUM < 16, 0, 1)
-View(w2.r)
+# Depressive symptoms recoded as binary - low/CESD<16(0), high/CESD>=16(1) 
+w2.s$MDPN.r
 
 ### Univariate and multivariate regressions
 
@@ -93,11 +91,14 @@ multiple.regression.with.ci(multi.JCog_int.do)
 #### Sensitivity analysis 2: Expanded diabetes group ####
 
 # Recode MDM.r into normal(0), prediabetes and diabetes(1), missing and non-partic(NA)
-w2.r$MDM.pd <- w2.r$MDM.r
-w2.r$MDM.pd[w2.r$MDM.r == 1] <- 0
-w2.r$MDM.pd[w2.r$MDM.r == 2] <- 1
-w2.r$MDM.pd[w2.r$MDM.r == 3] <- 1
+w2.s$MDM.pd <- w2.s$MDM.r
+w2.s$MDM.pd[w2.s$MDM.r == 1] <- 0
+w2.s$MDM.pd[w2.s$MDM.r == 2] <- 1
+w2.s$MDM.pd[w2.s$MDM.r == 3] <- 1
+View (w2.s)
 
+summary(as.factor(w2.s$MDM.r))
+summary(as.factor(w2.s$MDM.pd))
 
 ### Univariate and multivariate regressions
 
