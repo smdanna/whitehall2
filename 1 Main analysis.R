@@ -66,15 +66,22 @@ mean(NoDiab.Dep$JCog.z,na.rm = TRUE)
 mean(PrDiab.NoDep$JCog.z,na.rm = TRUE)  
 mean(PrDiab.Dep$JCog.z,na.rm = TRUE)    
 mean(Diab.NoDep$JCog.z,na.rm = TRUE)    
-mean(Diab.Dep$JCog.z,na.rm = TRUE)      
+mean(Diab.Dep$JCog.z,na.rm = TRUE)   
 
-# plot of means of six diabetes-depressive symptoms groups (unadjusted)
+t.test(NoDiab.NoDep$JCog.z)  
+t.test(NoDiab.Dep$JCog.z)    
+t.test(PrDiab.NoDep$JCog.z)  
+t.test(PrDiab.Dep$JCog.z)    
+t.test(Diab.NoDep$JCog.z)    
+t.test(Diab.Dep$JCog.z) 
+
+# plot of means of six diabetes-depressive symptoms groups (unadjusted)  
 
 diab = c("1norm",     "1norm",    "2prediab",  "2prediab",  "3diab",   "3diab") 
 dep =  c("0no dep",   "1dep",     "0no dep",   "1dep",      "0no dep", "1dep") 
-mean = c(0.1192711,   -0.655472,  -0.03658314, -0.5918611,  -1.462304, -3.53261) 
-lCI = c(-0.001994503, -1.0127375, -0.2232579,  -1.20270723, -1.882958, -4.721045)
-uCI = c(0.240536614,  -0.2982066,  0.1500916,   0.01898508, -1.041651, -2.344175)
+mean = c(0.1673546,  -0.5922964,  -0.3707031,  -0.9129023,  -1.462304, -3.53261) 
+lCI =  c(0.05568803, -0.9292368,  -0.6153102,  -1.6743883,  -1.882958, -4.721045)
+uCI =  c(0.27902118, -0.2553559,  -0.1260960,  -0.1514163,  -1.041651, -2.344175)
 JCog.means = data.frame(dep, diab, mean, lCI, uCI)   
 View(JCog.means)
 
@@ -86,9 +93,9 @@ ggplot(JCog.means, aes(x=diab, y=mean, colour=dep, group=dep)) +
   geom_point(position=position_dodge(0.05),size=3,shape=21, fill="white") +
   xlab("Diabetes status") +
   ylab("Summary cognition score") +
-  scale_colour_hue(name="Depression status",    # Legend label, use darker colors
+  scale_colour_hue(name="Depressive symptoms",    # Legend label, use darker colors
                    breaks=c("0no dep", "1dep"),
-                   labels=c("Low symptoms", "High symptoms"),
+                   labels=c("Low", "Elevated"),
                    l=40) +                    # Use darker colors, lightness=40
   # ggtitle("Change in Cognition among Exposure Groups (Phase 7 - Phase 9)") +
   theme_bw()+
@@ -100,8 +107,6 @@ ggplot(JCog.means, aes(x=diab, y=mean, colour=dep, group=dep)) +
   theme(legend.text = element_text(size = 15))+
   theme(legend.title = element_text(size=15))+ 
   geom_hline(yintercept = 0)
-
-
 
 
 #### Univariate and multivariate regressions ####
@@ -204,7 +209,6 @@ multi.JCog <- lm(w2.s$JCog.z ~ w2.s$MDM.do + w2.s$MDPN_SUM
 multiple.regression.with.ci(multi.JCog)
 
 
-
 #### Interaction term ####
 
 # create interaction term
@@ -232,8 +236,7 @@ multiple.regression.with.ci(multi.JCog_int.do)
 
 library(ggplot2)
 
-w2.s$MDM.do.f <- !is.na(w2.s$MDM.do)
-summary(w2.s$MDM.do.f)
+# create dataframe where diabetes status is not an NA
 
 int.df <- w2.s[!is.na(w2.s$MDM.do),]
 View(int.df)
