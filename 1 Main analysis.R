@@ -39,6 +39,50 @@ sd(w2.r$MCog.z,na.rm = TRUE)
 summary(w2.r$JCog.z)
 sd(w2.r$JCog.z,na.rm = TRUE)
 
+# cronbach's alpha for CES-D (internal consistency)
+
+w2.CESD <- w2.r
+
+w2.CESD$MDPN01 <-w2$MDPN01
+w2.CESD$MDPN02 <-w2$MDPN02
+w2.CESD$MDPN03 <-w2$MDPN03
+w2.CESD$MDPN04 <-w2$MDPN04
+w2.CESD$MDPN05 <-w2$MDPN05
+w2.CESD$MDPN06 <-w2$MDPN06
+w2.CESD$MDPN07 <-w2$MDPN07
+w2.CESD$MDPN08 <-w2$MDPN08
+w2.CESD$MDPN09 <-w2$MDPN09
+w2.CESD$MDPN10 <-w2$MDPN10
+w2.CESD$MDPN11 <-w2$MDPN11
+w2.CESD$MDPN12 <-w2$MDPN12
+w2.CESD$MDPN13 <-w2$MDPN13
+w2.CESD$MDPN14 <-w2$MDPN14
+w2.CESD$MDPN15 <-w2$MDPN15
+w2.CESD$MDPN16 <-w2$MDPN16
+w2.CESD$MDPN17 <-w2$MDPN17
+w2.CESD$MDPN18 <-w2$MDPN18
+w2.CESD$MDPN19 <-w2$MDPN19
+w2.CESD$MDPN20 <-w2$MDPN20
+View(w2.CESD)
+
+w2.CESDs <- w2.CESD[ which(!is.na(w2.r$JCog.z)), ]
+View(w2.CESDs)
+
+# dataframe with CESD items only for correlation matrix for cronbach's alpha
+
+w2.CESDo <- w2.CESDs[,c("MDPN01","MDPN02","MDPN03","MDPN04","MDPN05","MDPN06",
+    "MDPN07","MDPN08","MDPN09","MDPN10","MDPN11","MDPN12",
+    "MDPN13","MDPN14","MDPN15","MDPN16","MDPN17","MDPN18",
+    "MDPN19","MDPN20")]
+View(w2.CESDo)
+
+# compute cronbach's alpha
+library(psych)
+alpha(w2.CESDo, keys=NULL,cumulative=FALSE, title=NULL, max=100,na.rm = TRUE,
+      check.keys=TRUE,n.iter=1,delete=TRUE)
+alpha(x = w2.CESDo) #  lower alpha upper     95% confidence boundaries
+                    #  0.87  0.88  0.89 
+
 # means of composite cognitive z-score at phases 7 and 9
 
 mean(w2.s$MCog.z,na.rm = TRUE)
@@ -59,7 +103,14 @@ View(Diab.NoDep)
 Diab.Dep     <- w2.s[which(w2.s$MDM.r==3 & w2.s$MDPN.r==1),]
 View(Diab.Dep)
 
-# means of the six groups
+# means of the six groups, phases 7 and 9
+
+mean(NoDiab.NoDep$MCog.z,na.rm = TRUE)  
+mean(NoDiab.Dep$MCog.z,na.rm = TRUE)    
+mean(PrDiab.NoDep$MCog.z,na.rm = TRUE)  
+mean(PrDiab.Dep$MCog.z,na.rm = TRUE)    
+mean(Diab.NoDep$MCog.z,na.rm = TRUE)    
+mean(Diab.Dep$MCog.z,na.rm = TRUE)  
 
 mean(NoDiab.NoDep$JCog.z,na.rm = TRUE)  
 mean(NoDiab.Dep$JCog.z,na.rm = TRUE)    
@@ -68,6 +119,8 @@ mean(PrDiab.Dep$JCog.z,na.rm = TRUE)
 mean(Diab.NoDep$JCog.z,na.rm = TRUE)    
 mean(Diab.Dep$JCog.z,na.rm = TRUE)   
 
+# CI of six groups, phase 9
+
 t.test(NoDiab.NoDep$JCog.z)  
 t.test(NoDiab.Dep$JCog.z)    
 t.test(PrDiab.NoDep$JCog.z)  
@@ -75,7 +128,7 @@ t.test(PrDiab.Dep$JCog.z)
 t.test(Diab.NoDep$JCog.z)    
 t.test(Diab.Dep$JCog.z) 
 
-# plot of means of six diabetes-depressive symptoms groups (unadjusted)  
+# plot of means of six diabetes-depressive symptoms groups (phase 9, unadjusted)  
 
 diab = c("1norm",     "1norm",    "2prediab",  "2prediab",  "3diab",   "3diab") 
 dep =  c("0no dep",   "1dep",     "0no dep",   "1dep",      "0no dep", "1dep") 
@@ -250,7 +303,7 @@ int.graph + stat_smooth(method=lm) +
                    breaks=c("0", "1"),
                    labels=c("Normal", "Diabetes"),
                    l=40) +                    # Use darker colors, lightness=40
-  ggtitle("Interaction between diabetes and depression score") +
+  #ggtitle("Interaction between diabetes and depression score") +
   theme_bw()+
   theme(plot.title = element_text(size = rel(1.75)))+
   theme(axis.title.y = element_text(size = rel(1.5), angle = 90), axis.text.y = element_text(size=12))+
@@ -258,3 +311,4 @@ int.graph + stat_smooth(method=lm) +
   theme(legend.text = element_text(size = 15))+
   theme(legend.title = element_text(size=15))+ 
   geom_hline(yintercept = 0)
+
