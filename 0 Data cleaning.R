@@ -106,6 +106,7 @@ sd(w2.r$JSWORDS.z,na.rm = TRUE)
 
 # If there is change in cognition, JAH4.z will be different from 0
 
+
 ### 4: Compute a phase 9 summary score
 
 w2.r$JCog.z <- w2.r$JAH4.z + w2.r$JMEM.z + w2.r$JMH.z + w2.r$JANIMALS.z + w2.r$JSWORDS.z
